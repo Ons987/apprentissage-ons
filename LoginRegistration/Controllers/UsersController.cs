@@ -77,7 +77,6 @@ namespace LoginRegistration.Controllers
             }
             if (fileData != null)
             {
-
                 var userId = User.Identity.Name;
 
                 var account = Context.UserAccounts.FirstOrDefault(x => x.Email == userId);
