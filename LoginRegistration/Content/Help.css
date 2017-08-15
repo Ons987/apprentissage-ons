@@ -1,0 +1,59 @@
+﻿
+
+#helpButtonDiv{
+    position:fixed;
+    bottom:0;
+    left:20px;
+    border-radius:5px 5px 0px 0px;
+    padding:10px 40px 10px 40px;
+    cursor:pointer;
+    color:#fff;
+    background:rgba(52, 144, 255, 0.7);
+    z-index: 999;
+}
+
+#helpDiv{
+    position:fixed;
+    left:0;
+    bottom:0;
+    right:0;
+    background:rgba(51, 51, 51, 0.52);
+    transition: 1s;
+    z-index:1000;
+}
+
+#helpDiv div.helpButtons{
+    position:absolute;
+    bottom:10px;
+    left: -o-calc(50% - 144px)!important;
+    left: -webkit-calc(50% - 144px)!important;
+    left: -moz-calc(50% - 144px)!important;
+}
+
+#helpDiv div button{
+    background :rgba(255,255,255,0.8);
+    color:#444;
+    padding:10px 40px 10px 40px;
+}
+
+#helpCommentDiv{
+    position:fixed; 
+    border-radius:5px;
+    background:#fff;
+    padding:10px 10px 0px 10px;
+    width:200px; 
+}
+#helpCommentDiv p i{
+    margin-right:7px;
+}
+
+
+#replacementDiv{
+    position:fixed; 
+    border-radius:5px;
+    background:#fff;
+    padding:10px 10px 0px 10px;
+    z-index:1004;
+}
+
+

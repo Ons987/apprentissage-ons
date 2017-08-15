@@ -1,0 +1,159 @@
+﻿
+ .navbar .logo-box {
+    background: white;
+}
+.sidebar-profile img{
+    height:60px;
+    object-fit:cover;
+}
+.sideBarLogo{
+    height:55px;
+}
+.menuIcon {
+    height: 35px!important;
+    width: 35px!important;
+}
+.menuImage {
+    height: 75px!important;
+    width: 75px!important;
+    object-fit:cover;
+}
+.img-cover {
+    object-fit: cover;
+}
+.menuText {
+    font-size: 14px;
+    padding: 8px;
+    color: white;
+}
+       
+.jmLogoDiv{
+    height: 60px;
+    width: 80px;
+    position: absolute;
+            
+            
+    left: -moz-calc(50% - 40px);
+    left: -webkit-calc(50% - 40px);
+    left: -o-calc(50% - 40px);
+    left: calc(50% - 40px);
+}
+
+.small-sidebar:not(.page-sidebar-fixed) .accordion-menu li:first-child a p{
+    margin-top: 15px;
+}
+
+body:not(.page-sidebar-fixed) .accordion-menu li:first-child a{
+    padding-left: 15px;
+}
+
+.small-sidebar:not(.page-sidebar-fixed) .accordion-menu li:first-child a {
+    padding-left: 5px; 
+}
+
+.modal.fade.in{
+    display: flex !important;
+    align-items: center;
+}
+
+.modal-footer button{
+    font-size: 18px;
+    padding-left:20px;
+    padding-right:20px;
+    border-radius:4px;
+}
+
+.modal-footer{
+    text-align:center;
+}
+
+.form-control.customInput{
+  border-radius:10px 10px 10px 10px!important;
+  background:#fff!important;
+  margin-bottom:20px;
+  max-height:75px;
+}
+
+.form-control.customInputGrayBg{
+  border-radius:10px 10px 10px 10px!important;
+  background:#f1f4f9;
+}
+
+.itemFooter button{
+    font-size:17px;
+}
+
+.topRightDiv{
+    top:10px;
+    float: right;
+}
+.topRightDiv button {
+    width: 30px;
+    height: 30px;
+    margin: 0;
+    padding: 0;
+}
+
+.topRightDiv .dropdown-menu:after {
+    border-right: 0;
+    border-left: 0;
+}
+
+
+.topRightDiv .dropdown-menu:before {
+    border-right: 0;
+    border-bottom: 0;
+    border-left: 0;
+}
+.btn-showoptions {
+    border: none!important;
+    background-color: transparent!important;
+    color: #999;
+}
+
+.profileEditOptionsDropdown {
+    border: 0;
+    margin-top: -5px!important;
+    min-width: unset;
+    -webkit-box-shadow: 0 8px 10px 1px rgba(0,0,0,0.14), 0 3px 14px 2px rgba(0,0,0,0.12), 0 5px 5px -3px rgba(0,0,0,0.2);
+    box-shadow: 0 8px 10px 1px rgba(0,0,0,0.14), 0 3px 14px 2px rgba(0,0,0,0.12), 0 5px 5px -3px rgba(0,0,0,0.2);
+    padding: 24px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+}
+
+.profileEditOptionsDropdown li > a{
+    font-size:17px;
+}
+
+.restaurantEditFooter{
+    text-align:center;
+}
+
+.restaurantEditFooter button{
+    font-size:17px;
+}
+
+@media (max-width:700px){
+    
+.modal-dialog {
+ width:100%!important;
+}
+}
+
+.nextButton{
+        padding:15px 40px 15px 40px !important;
+    border-radius: 10px;
+    font-size: 20px;
+    margin-top:20px;
+}
+
+
+input[type=text], input[type=number], input[type=password]{
+    height: 100%;
+}
+
+.addressInput{
+	height: 70px!important;
+	background:white!important;
+}

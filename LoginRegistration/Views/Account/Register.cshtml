@@ -1,0 +1,144 @@
+﻿@model LoginRegistration.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Register";
+    Layout = "_AccountLayout.cshtml";
+}
+<link href="~/Content/Style.css" rel="stylesheet" />
+<link href="~/Content/Global.css" rel="stylesheet" />
+<link href="~/Content/CheckBoxRadio.css" rel="stylesheet" />
+<link href="~/assets/plugins/bootstrap-datepicker/css/datepicker3.css" rel="stylesheet" />
+<link href="~/assets/plugins/dropzone/dropzone.min.css" rel="stylesheet" />
+<link href="~/Content/starsRating/css/star-rating.min.css" rel="stylesheet" />
+<style>
+    .dz-preview {
+        display: none !important;
+    }
+</style>
+
+
+
+<div class="input-group">
+    <div class="input-group-addon inputIcon jmOrangeColor"><i class="fa fa-user"></i></div>
+    <input type="text" class="form-control noLeftBorder" id="firstName" placeholder="Prénom">
+</div>
+<p class="jmOrangeColor" id="firstNameError"></p>
+<div class="input-group">
+    <div class="input-group-addon inputIcon jmOrangeColor"><i class="fa fa-user"></i></div>
+    <input type="text" class="form-control noLeftBorder" id="lastName" placeholder="Nom">
+</div>
+<p class="jmOrangeColor" id="lastNameError"></p>
+
+<div class="input-group">
+    <div class="input-group-addon inputIcon jmOrangeColor"><i class="fa fa-envelope"></i></div>
+    <input type="text" class="form-control noLeftBorder" id="email" placeholder="Email">
+</div>
+<p class="jmOrangeColor" id="emailError"></p>
+<div class="input-group">
+    <div class="input-group-addon inputIcon jmOrangeColor"><i class="fa fa-lock"></i></div>
+    <input type="password" class="form-control noLeftBorder" id="password" placeholder="Mot de passe">
+</div>
+<p class="jmOrangeColor" id="passwordError"></p>
+<div class="input-group">
+    <div class="input-group-addon inputIcon jmOrangeColor"><i class="fa fa-unlock-alt"></i></div>
+    <input type="password" class="form-control noLeftBorder" id="passwordConfirm" placeholder="Confirmation du mot de passe">
+</div>
+<p class="jmOrangeColor" id="passwordConfirmError"></p>
+<a class="btn btn-jmOrange btn-block jmOrangeBG nextButton" onClick="register()">Register</a>
+@section scripts{
+    <script src="~/assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+    <script src="~/Scripts/Helpers.js"></script>
+    <script src="~/Content/starsRating/js/star-rating.min.js"></script>
+    <script src="~/Content/starsRating/js/locales/fr.js"></script>
+    <script>
+   
+   
+
+   
+    function register() {
+        $("#emailError").hide();
+        $("#firstNameError").hide();
+        $("#lastNameError").hide();
+        $("#passwordConfirmError").hide();
+        $("#passwordError").hide();
+
+        $("#loadingDiv").show();
+
+        var email = document.getElementById("email").value;
+        var password = document.getElementById("password").value;
+        var passwordConfirm = document.getElementById("passwordConfirm").value;
+        var firstName = document.getElementById("firstName").value;
+        var lastName = document.getElementById("lastName").value;
+
+        var error = false;
+        if (email == undefined || email == "") {
+            $("#emailError").text("@Html.Raw("email required")");
+            $("#emailError").show();
+            error = true;
+        }
+        if (password == undefined || password == "") {
+            $("#passwordError").text("@Html.Raw("Password required")");
+            $("#passwordError").show();
+            error = true;
+        }
+        if (passwordConfirm == undefined || passwordConfirm == "") {
+            $("#passwordConfirmError").text("@Html.Raw("Confirm Password")");
+            $("#passwordConfirmError").show();
+            error = true;
+        }
+        if (firstName == undefined || firstName == "") {
+            $("#firstNameError").text("@Html.Raw("First Name required")");
+            $("#firstNameError").show();
+            error = true;
+        }
+        if (lastName == undefined || lastName == "") {
+            $("#lastNameError").text("@Html.Raw("Last Name required")");
+            $("#lastNameError").show();
+            error = true;
+        }
+
+        if (password  != passwordConfirm) {
+            $("#passwordConfirmError").text("@Html.Raw("Password n'est pas conforme")");
+            $("#passwordConfirmError").show();
+            error = true;
+        }
+
+        if (error == true) {
+            $("#loadingDiv").hide();
+            return;
+        }
+
+        var model = { email, password, firstName, lastName };
+        $.ajax({
+            type: "POST",
+            url: "/Account/Register",
+            data: {
+                "model": model
+            },
+            success: function (data) {
+                $("#loadingDiv").hide();
+                if (data.Message != undefined && data.Message != null) {
+                    $("#errorMessage").text(data.Message);
+                    $("#errorMessage").show();
+                    return;
+                }
+                window.location= "/Home/index";
+
+                
+            },
+            error: function (data) {
+                $("#loadingDiv").hide();
+                $("#errorMessage").text("@Html.Raw("Erreur s'est produit")");
+                $("#errorMessage").show();
+                return;
+            }
+        });
+    }
+
+   
+   
+
+   
+    $(".languageRating").rating({  step:1, language:"fr" })
+    </script>
+}
+

@@ -1,0 +1,174 @@
+﻿@using LoginRegistration.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "Log in";
+    Layout = "_AccountLayout.cshtml";
+}
+<link href="~/Content/Style.css" rel="stylesheet" />
+<link href="~/Content/Global.css" rel="stylesheet" />
+<link href="~/Content/CheckBoxRadio.css" rel="stylesheet" />
+
+
+<div class="modal fade" id="resetPasswordModal" style="z-index:9998" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="resetPasswordModalTitle"></h4>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12">
+                    <p style="font-size:18px">Veuillez introduire votre email afin de recevoir un email de réinitialisation de mot de passe</p>
+                </div>
+                <div class="input-group" style="padding:10px">
+                    <div class="input-group-addon inputIcon jmOrangeColor"><i class="fa fa-envelope"></i></div>
+                    <input type="email" class="form-control noLeftBorder" id="resetPasswordEmail" placeholder="Email">
+                </div>
+                <p id="resetPasswordEmailError" class="jmOrangeColor" style="padding:10px;display:none;"></p>
+                <p id="resetPasswordEmailSuccess" style="padding:10px;display:none;"></p>
+            </div>
+            <div class="modal-footer  text-right" style="position:static;margin-top:20px;">
+                <button type="button" class="btn btn-default nextButton" style="margin-top: 0px;" onclick="resetPassword()">Valider</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<a id="redirector" style="display:none"></a>
+<div class="text-center jmOrangeColor" style="margin-bottom:15px">
+    <img src="~/Content/Images/jm-logo.png" />
+</div>
+
+<div class="login-box" style="max-width:600px;">
+    <p class="jmOrangeColor" id="errorMessage" style="display:none"></p>
+    <div class="input-group">
+        <div class="input-group-addon inputIcon jmOrangeColor"><i class="fa fa-envelope"></i></div>
+        <input type="text" class="form-control noLeftBorder" id="email" placeholder="Email">
+    </div>
+    <p id="emailError" class="jmOrangeColor"></p>
+    <div class="input-group">
+        <div class="input-group-addon inputIcon jmOrangeColor"><i class="fa fa-lock"></i></div>
+        <input type="password" class="form-control noLeftBorder" id="password" placeholder="Mot de passe">
+    </div>
+    <p id="passwordError" class="jmOrangeColor"></p>
+    <div class="form-group" style="margin-top:10px">
+        <label class="control control--checkbox no-uniform">
+            <input type="radio" class="no-uniform" id="rememberMe">
+            <div class="control__indicator"></div>
+            Rester connecté
+        </label>
+    </div>
+    <div class="col-md-12" style="text-align:center;margin-bottom:20px;">
+        <button class="btn btn-jmOrange jmOrangeBG nextButton" style="margin-top: 0px!important;" onclick="login()">Se connecter</button>
+    </div>
+    <div class="col-md-12 noPadding">
+        <div class="col-md-6 noPadding"><p style="font-size:14px;">Vous n'avez pas de compte? <a href="~/Account/Register">S'inscrire</a></p></div>
+        <div class="col-md-6 noPadding" style="text-align:right;font-size:14px;"><a href="javascript:void(0)" onclick="showPasswordReset()">Mot de passe oublié?</a></div>
+
+
+    </div>
+</div>
+
+
+
+@section scripts{
+    <script>
+    var returnUrl = '@ViewBag.ReturnUrl';
+    function login() {
+        $("#loadingDiv").show();
+        var email = document.getElementById("email").value;
+        var password = document.getElementById("password").value;
+        var rememberMe = document.getElementById("rememberMe").checked;
+        $("#emailError").hide();
+        $("#passwordError").hide();
+
+        var error = false;
+
+        if (email == undefined || email == "") {
+            $("#loadingDiv").hide();
+            $("#emailError").text("L'email est obligatoire");
+
+            $("#emailError").show();
+            error = true;
+        }
+
+        if (password == undefined || password == "") {
+            $("#loadingDiv").hide();
+            $("#passwordError").text("Le mot de passe est obligatoire");
+            $("#passwordError").show();
+            error = true;
+        }
+
+        if (error == true)
+        {
+            $("#loadingDiv").hide();
+            return;
+
+        }
+        var model = { email, password, rememberMe };
+
+        $.ajax({
+            type: "POST",
+            url: "/Account/Login",
+            data: {
+                "model": model,
+                "returnUrl": returnUrl
+            },
+            success: function (data) {
+                if (data.Message != undefined && data.Message != null) {
+                    $("#loadingDiv").hide();
+                    $("#errorMessage").text(data.Message);
+                    $("#errorMessage").show();
+                    return;
+                }
+                $("#errorMessage").hide();
+
+                if (data.Redirect == true) {
+                    $('#redirector').attr('href', decodeURIComponent(data.ReturnUrl));
+                    $('#redirector')[0].click();
+                }
+            },
+            error: function (data) {
+                $("#loadingDiv").hide();
+                $("#errorMessage").text(data);
+                $("#errorMessage").show();
+                return;
+            }
+        });
+
+    }
+    function showPasswordReset() {
+        $("#resetPasswordModal").modal('show');
+    }
+
+    function resetPassword() {
+        $("#loadingDiv").show();
+        var email = $("#resetPasswordEmail").val();
+        $("#resetPasswordEmailError").hide();
+        $("#resetPasswordEmailSuccess").hide();
+
+        $.ajax({
+            type: "POST",
+            url: "/Account/ResetPassword",
+            data: {
+                "email": email
+            },
+            success: function (data) {
+                $("#loadingDiv").hide();
+                if (data.Message != undefined && data.Message != null) {
+                    $("#resetPasswordEmailError").text(data.Message);
+                    $("#resetPasswordEmailError").show();
+                    return;
+                }
+                $("#resetPasswordEmailSuccess").text('Un email de réinitialisation du mot de passe vient d\'être envoyé à votre adresse');
+                $("#resetPasswordEmailSuccess").show();
+            },
+            error: function (data) {
+                $("#loadingDiv").hide();
+                $("#resetPasswordEmailError").text(data);
+                $("#resetPasswordEmailError").show();
+                return;
+            }
+        });
+    }
+    </script>
+}

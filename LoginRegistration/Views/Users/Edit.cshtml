@@ -1,0 +1,443 @@
+﻿@model LoginRegistration.Models.UserAccount
+@{
+    ViewBag.Title = "Home Page";
+    
+}
+<link href="../assets/plugins/bootstrap-datepicker/css/datepicker3.css" rel="stylesheet" type="text/css" />
+
+<link href="../Content/VideoPlayerPlugin/plyr.css" rel="stylesheet" />
+<link href="../Content/bootstrapWithFullHeight.css" rel="stylesheet" />
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
+<link href="~/Content/Bubbles.css" rel="stylesheet" />
+<link href="~/Content/Help.css" rel="stylesheet" />
+<script src="~/assets/plugins/dropzone/dropzone.min.js"></script>
+<link href="~/Content/images-grid.css" rel="stylesheet" />
+<link href="~/Content/Style.css" rel="stylesheet" />
+<link href="~/Content/Global.css" rel="stylesheet" />
+
+<style>
+        video {
+        width: 100%;
+    }
+
+    .timeline-item {
+        background: white;
+    }
+
+    .btn.active {
+        background-color: #3490FF;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+    }
+
+    .dz-preview {
+        display: none;
+    }
+
+    .panel-body {
+        padding: 8px !important;
+    }
+    .btn-success {
+        background-color: #3490ff;
+    }
+    .bubble-text-color {
+        color: #3490ff;
+    }
+    .hideIfNoStartDateOnCreate{
+        display: none;
+    }
+
+    .profile-container-1 {
+	background-color:white;
+	border-radius:10px;
+	color: #131418;
+	margin-right:0;
+	margin-left:0;
+	height:100%;
+}
+.profile-container-1 h3{
+	font-size:18px;
+	font-weight:600;
+	margin-top:0;
+}
+.profile-container-1 p{
+	margin:0;
+	font-weight:400;
+}
+.profile-container-1 .profile-details{
+	margin-top:40px;
+	margin-bottom:40px;
+}
+
+.profile-container-1 .profile-image{
+	margin-top:100px;
+	margin-bottom:40px;
+
+}
+.profile-container-1 .numberOfContainer{
+	margin: 0 auto; 
+	max-width:232px;
+}
+.profile-container-1 .numberOf{
+	margin-left:8px;
+	margin-right:8px;
+	text-align:center;
+	box-shadow: 2px 2px 4px #3490FF;
+	border-radius:1000px;
+	width:100px;
+	background-color:#3490FF;
+	color:white;
+}
+.profile-container-1 .numberOf .number{
+	margin-top:10px;
+	font-weight:bold;
+	font-size:16px;
+}
+.profile-container-1 .numberOf .text{
+	font-size:10px;
+	margin-bottom:10px;
+}
+
+.profile-container-1 .list-unstyled{
+	margin:0;
+}
+.profile-container-1 .profile-image img{
+	margin:auto;
+	width:180px;
+	margin-top:5px;
+	height:180px;
+}
+.profile-container-2{
+	background-color:white;
+	border-radius:10px;
+	color: #131418;
+	height:100%;
+}
+.dropZoneDiv button{
+	margin-top: 5px!important;
+	margin-right: 5px!important;
+}
+</style>
+<div class="row">
+    <div class="modal fade" id="uploadPhotoModalEdit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <br />
+            <div class="modal-content center modal-upload">
+                <div class="modal-body" style="padding: 0;">
+                    <div class="panel-body" id="dropZonePhotoPanel">
+                        <div class="dropZoneDiv" id="uploadEventPhotoEdit">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+                            <div id="uploadEventPhotoMessageEdit" class="text-center"></div>
+                        </div>
+                        <input id="eventPhotoNameEdit" type="text" style="display:none" />
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="modal fade" id="uploadVideoModalEdit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <br />
+            <div class="modal-content center modal-upload">
+                <div class="modal-body" style="padding: 0;">
+
+                    <div class="panel-body" id="dropZoneVideoPanel">
+                        <div class="dropZoneDiv" id="uploadEventVideoEdit">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+                            <div id="uploadEventVideoMessageEdit" class="text-center">Sélectionner un fichier</div>
+                        </div>
+                        <input id="eventVideoNameEdit" type="text" style="display:none" />
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="modal fade" id="uploadDocumentModalEdit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <br />
+            <div class="modal-content center modal-upload">
+                <div class="modal-body" style="padding : 0;">
+                    <div class="panel-body" id="dropZoneDocumentPanel">
+                        <div class="dropZoneDiv" id="uploadEventDocumentEdit">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+                            <div id="uploadEventDocMessageEdit" class="text-center">Sélectionner un fichier</div>
+                        </div>
+                        <input id="eventDocumentNameEdit" type="text" style="display:none" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row noMarginRow m-t-sm">
+    <div class="row noMarginRow hideWhenCreateEvent">
+        <div class="row-height">
+            <div class="col-md-9  col-md-height">
+                <div class="row profile-container-1 ">
+
+                    <div class="col-lg-3 col-sm-6 profile-image">
+                        <div class="profile-image-container" style="cursor:pointer" onclick="showChangePhotoModal()">
+                            @if (Model.Photo != null && Model.Photo != "")
+                            {
+                                <img id="Picture@(Model.UserID)" class="img-cover" src="@Model.Photo" alt="">
+                                <a href="#"><span class="fa fa-camera fa-5x" style="font-size:20px;color:thistle"></span></a>
+                            }
+                            else
+                            {
+                                <img id="Picture@(Model.UserID)" src="../Content/Images/DefaultUserImage.png" alt="">
+                                <a href="#"><span class="fa fa-camera fa-5x" style="font-size:20px;color:thistle"></span></a>
+                            }
+                        </div>
+                    </div>
+                    <div class="col-lg-9 col-sm-6 profile-details hiddenWhenEditProfile">
+                        <div class="dropdown profileEditOptions">
+                            <button class="btn btn-showoptions dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="true">
+                               <!-- <svg height="100%" width="100%" viewBox="0 0 24 24">
+                                    <path class="Ce1Y1c" d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" style="fill: #757575;"></path>
+                                </svg>-->
+                            </button>
+                            <ul class="profileEditOptionsDropdown">
+                                <li><a href="javascript:void(0)" onclick="showEditProfile();">Editer</a></li>
+                            </ul>
+                        </div>
+                        <h3 id="myName">@Model.FirstName @Model.LastName</h3>
+                    </div>
+                    <div class="col-lg-9 col-sm-6 profile-details showWhenEditProfile" style="display:none">
+
+                        <input class="createEventInput" id="editProfileFirstName" placeholder="Prénom" type="text" value="@Model.FirstName" init="@Model.FirstName">
+                        <input class="createEventInput" id="editProfileLastName" placeholder="Nom" type="text" value="@Model.LastName" init="@Model.LastName">
+                        <ul class="list-unstyled">
+
+                            <li class="profileLine">
+                                <div class="editProfileButtons">
+                                    <button class="btn btn-default blue-text-color" onclick="editProfile2(this);">Sauvegarder</button>
+                                    <button class="btn btn-default" onclick="hideEditProfile();">Annuler</button>
+                                </div>
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+                    <div class="modal fade" id="uploadProfilePhotoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <br />
+                            <div class="modal-content center modal-upload">
+                                <div class="modal-body" style="padding : 0;">
+                                    <div class="panel-body" id="dropZoneDocumentPanel">
+                                        <div class="dropZoneDiv" id="uploadProfilePhoto">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+                                            <div id="uploadProfilePhotoMessage" class="text-center">Sélectionner un fichier</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="display:none; vertical-align:middle;">
+                        <div id="tip2">
+                            <p style="font-size:11px;padding:5px;line-height:16px" id="errorMessage"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <script src="../assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+    <script src="../Scripts/EventsScripts/RemovePost.js"></script>
+    <script src="../Scripts/EventsScripts/EditPost.js"></script>
+    <script src="../Scripts/loopDivs.js"></script>
+
+    <script src="../Scripts/VideoPlayerPlugin/plyr.js"></script>
+    <script src="../Scripts/EventsScripts/ShareEvent.js"></script>
+    <script src="../Scripts/EventsScripts/RemoveEvent.js"></script>
+    <script src="~/Scripts/HelpProfile.js"></script>
+    <script>plyr.setup();</script>
+    <script>
+ 
+
+                                function showEditProfile() {
+                                    $('.hiddenWhenEditProfile').hide();
+                                    $('#editProfileDateOfBirth').datepicker({
+                                        orientation: "top auto",
+                                        isRTL: false,
+                                        format: 'dd/mm/yyyy',
+                                        autoclose: true,
+                                        language: 'fr'
+                                    });
+                                    $('.showWhenEditProfile').show();
+                                }
+
+                                function hideEditProfile() {
+                                    $('.hiddenWhenEditProfile').show();
+                                    $('.showWhenEditProfile').hide();
+                                    resetEditProfile();
+                                }
+                 
+                                var uploadEventPhotoEdit = new Dropzone("#uploadProfilePhoto", {
+                                    url: "/Users/UploadPhoto",
+                                    acceptedFiles: "image/jpeg,image/png,image/gif,image/jpg",
+                                    maxFilesize: 5, // MB
+                                    maxFiles: 1,
+                                    accept: function (file, done) {
+                                        var re = /(?:\.([^.]+))?$/;
+                                        var ext = re.exec(file.name)[1];
+                                        ext = ext.toUpperCase();
+                                        if (ext == "JPG" || ext == "JPEG" || ext == "PNG" || ext == "GIF" || ext == "BMP") {
+                                            document.getElementById("loadingDiv").style.display = 'block';
+
+                                            done();
+                                        } else {
+                                            done("Veuillez sélectionner un fichier image.");
+                                        }
+                                    },
+                                    success: function (file, response) {
+                                       if (response.Result == "") {
+                                            $('img#Picture'+@(Model.UserID))
+                                                .each(function (index) {
+                                                    var isSecure = ($(this).attr('src').indexOf("?") !== -1);
+                                                    if(isSecure)
+                                                        $(this).attr('src', $(this).attr('src') + '&timestamp=' + new Date().getTime())
+                                                    else
+                                                        $(this).attr('src', $(this).attr('src') + '?timestamp=' + new Date().getTime())
+                                                }
+                                            );
+                                        }
+                                        document.getElementById("loadingDiv").style.display = 'none';
+                                        $('#uploadProfilePhotoModal').modal('hide');
+                                        uploadEventPhotoEdit.removeAllFiles();
+                      
+                                            
+                                    },
+                                    complete: function (file) {
+                                        if (file.size > 5 * 1024 * 1024) {
+
+                                            $('#uploadProfilePhotoMessage').html('<div class="alert alert-danger" style="margin: 0;">La taille du fichier est supèrieure à 5MB</div>');
+                                            return false;
+                                        }
+
+                                        if (!file.type.match('image.*')) {
+                                            $('#uploadProfilePhotoMessage').html('<div class="alert alert-danger" style="margin: 0;">Le fichier n\'est pas une image</div>');
+                                            return false;
+                                        }
+                                    },
+                                    error: function () {
+                                        $('#uploadProfilePhotoMessage').html('<div class="alert alert-danger" style="margin: 0;">Une erreur s\'est produite, veuillez réessayer</div>');
+                                        document.getElementById("loadingDiv").style.display = 'none';
+                                    }
+                                });
+
+
+                                function showChangePhotoModal() {
+                                    Dropzone.forElement('#uploadProfilePhoto').removeAllFiles();
+                                    $('#uploadProfilePhotoMessage').html('<div class="alert alert-info" style="margin: 0;">Sélectionner un fichier</div>');
+                                    $("#uploadProfilePhotoModal").modal();
+                                }
+                                function editProfile2(sender) {
+                                    sender = $(sender);
+                                    var firstName = document.getElementById("editProfileFirstName").value;
+                                    var lastName = document.getElementById("editProfileLastName").value;
+
+                                    if (firstName == "" || firstName == null)
+                                    {
+                                        document.getElementById("errorMessage").innerHTML = "Veuillez saisir votre prénom";
+                                        tooltip.pop(document.getElementById("editProfileFirstName"), '#tip2', { position: 3, cssClass: 'no-padding' });
+                                        return false;
+                                    }
+
+                                    if (lastName == "" || lastName == null) {
+                                        document.getElementById("errorMessage").innerHTML = "Veuillez saisir votre nom";
+                                        tooltip.pop(document.getElementById("editProfileLastName"), '#tip2', { position: 3, cssClass: 'no-padding' });
+                                        return false;
+                                    }
+                                    sender.addClass('disabled');
+                                    var model= { "FirstName":firstName , "LastName":lastName };
+                                    $.ajax({
+                                        type: "POST",
+                                        url: "/Users/EditProfile",
+                                        data: {
+                                            "model": model,
+                                            
+
+                                        },
+                                        success: function (data) {
+
+                                            document.getElementById("editProfileFirstName").setAttribute("init",data.FirstName);
+                                            document.getElementById("editProfileLastName").setAttribute("init",data.LastName);
+
+
+                                            $('#myName').text(data.FirstName + ' ' + data.LastName);
+                                            $('#myAddress').text(data.Address);
+                                            if (data.DateOfBirth != null && data.DateOfBirth != "") {
+                                                var date = new Date(Number(data.DateOfBirth.replace(/[^\d.]/g, '')))
+                                                $('#myDateOfBirth').text(('0'+date.getDate()).slice(-2) + '/' +('0' +(date.getMonth()+1)).slice(-2) + '/' + date.getFullYear());
+                                            }
+
+                                            $('#myGenderType').text((data.GenderType==1) ? 'Homme' : (data.GenderType==2) ? 'Femme' :'');
+                                            $('#myPhoneNumber').text(data.PhoneNumber);
+                                            sender.removeClass('disabled');
+                                            hideEditProfile();
+                                        },
+                                        error: function (data) {
+                                            sender.removeClass('disabled');
+                                            hideEditProfile();
+                                        }
+                                    });
+                                }
+
+                                function resetEditProfile(){
+                                    document.getElementById("editProfileFirstName").value = document.getElementById("editProfileFirstName").getAttribute("init");
+                                    document.getElementById("editProfileLastName").value = document.getElementById("editProfileLastName").getAttribute("init");
+
+                                }
+
+
+    </script>
+<script src="~/assets/plugins/dropzone/dropzone.min.js"></script>
+    <script src="../Scripts/EventsScripts/LikeOrUnlikeEvent.js"></script>
+    <script src="../Scripts/EventsScripts/CreatePost.js"></script>
+    <script src="../Scripts/EventsScripts/ParticipateOrCancelEventParticipation.js"></script>
+    <script src="../Scripts/EventsScripts/EditEvent.js"></script>
+<script src="~/assets/plugins/jquery/jquery-2.1.4.min.js"></script>
+<script src="~/assets/plugins/jquery-ui/jquery-ui.min.js"></script>
+<script src="~/assets/plugins/jquery-blockui/jquery.blockui.js"></script>
+<script src="~/assets/plugins/bootstrap/js/bootstrap.js"></script>
+<script src="~/assets/plugins/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+<script src="~/assets/plugins/switchery/switchery.min.js"></script>
+<script src="~/assets/plugins/uniform/jquery.uniform.min.js"></script>
+<script src="~/assets/plugins/plupload/js/jquery.plupload.queue/jquery.plupload.queue.min.js"></script>
+<script src="~/assets/plugins/flot/jquery.flot.min.js"></script>
+<script src="~/assets/plugins/plupload/js/plupload.full.min.js"></script>
+<script src="~/assets/plugins/plupload/js/plupload.min.js"></script>
+<script src="~/assets/js/pages/form-plupload.js"></script>
+<script src="~/Scripts/Helpers.js"></script>
+<script src="~/assets/plugins/offcanvasmenueffects/js/classie.js"></script>
+<script src="~/assets/plugins/offcanvasmenueffects/js/main.js"></script>
+<script src="~/assets/plugins/waves/waves.min.js"></script>
+<script src="~/assets/plugins/toastr/toastr.min.js"></script>
+<script src="~/assets/plugins/flot/jquery.flot.tooltip.min.js"></script>
+<script src="~/assets/plugins/flot/jquery.flot.time.min.js"></script>
+<script src="~/assets/plugins/flot/jquery.flot.symbol.min.js"></script>
+<script src="~/assets/plugins/flot/jquery.flot.resize.min.js"></script>
+<script src="~/assets/plugins/metrojs/MetroJs.min.js"></script>
+<script src="~/assets/js/modern.js"></script>
+<script src="~/Content/tooltip.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/i18n/fr.js"></script>
+
+}

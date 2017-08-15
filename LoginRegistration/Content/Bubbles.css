@@ -1,0 +1,102 @@
+﻿#codeRow {
+    margin-left: 0px;
+    background: white;
+    padding-top: 20px;
+    margin-right: 0;
+}
+#bubbleCode
+{
+    border:none;
+    border-radius:2px 0 0 2px ;
+    height:50px;
+    background:#e4e4e4;
+}
+
+#basic-addon1Code{
+    padding:0;
+    background-color:#efefef;
+    border:none; 
+    border-radius:2px 50% 50% 2px;
+}
+
+
+.addBubbleDiv { 
+    right: 10px;
+    bottom: 20px;
+    padding: 5px 0;
+    width: 230px;
+    height: 60px;
+    line-height: 22px;
+    position: fixed;
+    z-index: 1;
+}
+.addBubbleDiv input {  position:absolute;
+        width:0px;
+        float:Left;
+        margin-left:210px;
+        -webkit-transition: all 0.2s ease-in-out;
+        -moz-transition: all 0.2s ease-in-out;
+        -o-transition: all 0.2s ease-in-out;
+        transition: all 0.2s ease-in-out;
+        height:30px; 
+        line-height: 18px;  
+        outline: none; 
+        -webkit-appearance: none; 
+        border:2px 0 0 2px; 
+        border-width:0; 
+}
+
+.addBubbleDiv input:focus { 
+    width: 200px; 
+    margin-left: 0px; 
+    padding-left:15px
+
+}
+@media (min-width: 768px) {
+    .addBubbleDiv:hover input { 
+        width: 200px; 
+        margin-left: 0px; 
+        padding-left:15px
+    }
+}
+
+
+/*.addBubbleDiv { 
+    right: 10px;
+    bottom: 20px;
+    padding: 5px 0;
+    width: 230px;
+    height: 60px;
+    line-height: 22px;
+    position: fixed;
+    z-index: 1;
+}
+.addBubbleDiv input {  position:absolute;
+        width:0px;
+        float:Left;
+        margin-left:210px;
+        -webkit-transition: all 0.2s ease-in-out;
+        -moz-transition: all 0.2s ease-in-out;
+        -o-transition: all 0.2s ease-in-out;
+        transition: all 0.2s ease-in-out;
+        height:30px; 
+        line-height: 18px;  
+        outline: none; 
+        -webkit-appearance: none; 
+        border:2px 0 0 2px; 
+        border-width:0; 
+}
+
+.addBubbleDiv input:focus { 
+    width: 200px; 
+    margin-left: 0px; 
+    padding-left:15px
+
+}
+@media (min-width: 768px) {
+    .addBubbleDiv:hover input { 
+        width: 200px; 
+        margin-left: 0px; 
+        padding-left:15px
+    }
+}*/
